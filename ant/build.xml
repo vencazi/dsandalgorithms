@@ -1,0 +1,100 @@
+<project name="ml Engine" basedir="." default="all">
+
+    <property environment="env"/>
+
+    <!-- ==================== Initialization Properties ===================== -->
+    <property file="ant-properties"/>
+
+    <!-- No need to edit beyond this point FOR COMPILING -->
+	<path id="classpath">
+		<!--<fileset dir="${interview_lib_dir}" includes="**/*.jar"/>-->
+		<fileset dir="${interview_classes_dir}" includes="**/*.jar"/>
+	</path>
+	
+    <!-- Normal build (compilation) of application -->
+    <target name="compile" >
+        <javac srcdir="${interview_dir}"
+           destdir="${interview_classes_dir}"
+           debug="${debug}" classpathref="classpath">
+        </javac>
+    </target>
+
+    <!-- Remove classes directory for clean build -->
+    <target name="clean" description="Prepare for clean build">
+    
+        <!-- delete build dir before doing any processing..-->
+        <delete dir="${interview_build_dir}" />
+
+	<!-- directory to contain all files -->
+        <mkdir dir="${interview_build_dir}" />        
+
+        <!-- directory to place interview_deploy.jar (binary distribution) -->
+        <delete dir="${deploy_dir}"/>
+		<mkdir dir="${deploy_dir}" />
+
+    	<!-- directory to contain classes files -->
+        <mkdir dir="${interview_classes_dir}" />
+
+        <!-- directory to contain properties -->
+        <mkdir dir="${interview_props_dir}" />        
+        
+        <!-- directory to contain lib files -->
+        <!--<mkdir dir="${interview_lib_dir}" />-->
+
+	</target>
+
+    <!-- Copy property files over -->
+    <target name="cp_props">
+        <tstamp/>
+       <copy todir="${interview_props_dir}">
+            <fileset dir="${interview_dir}/main/java/resources" includes="**/*"/>
+       </copy>
+        <copy todir="${interview_deploy_dir}">
+            <fileset dir="${base_dir}" includes="*.bat"/>
+			<fileset dir="${base_dir}" includes="*.sh"/>
+        </copy>
+    </target>
+
+    <!-- copy library files -->
+    <target name="interview_lib_copy" description="Core Dir : ${core_dist_dir}">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <copy todir="${interview_classes_dir}" flatten="true">
+        	<fileset dir="${base_dir}/lib" includes="*.jar"/>
+        </copy>
+    </target>     
+
+    <target name="interview_jar_copy">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- copy ML jar files -->
+        <copy todir="${interview_deploy_dir}" flatten="true">
+            <fileset dir="${deploy_dir}" includes="${report_tool}.jar"/>
+        </copy>        
+    </target>    
+
+    <target name="interview_jar" description="Create binary distribution">
+        <jar
+            jarfile="${interview_classes_dir}/${report_tool}.jar"
+            basedir="${interview_classes_dir}"
+            excludes="**/*.jar"/>
+    </target>
+
+    <!-- Create binary distribution of ML (interview_deploy.jar) -->
+    <target name="dist" description="Create binary distribution">
+           <jar
+            jarfile="${deploy_dir}/${report_tool}_deploy.war"
+            basedir="${interview_classes_dir}"
+            excludes="**/*.class"/>
+    </target>
+    
+    <!-- Build entire project -->
+    <!--<target name="project" depends="clean,interview_lib_copy,compile,interview_jar,interview_jar_copy,cp_props"/>-->
+    <target name="project" depends="clean,interview_lib_copy,compile"/>
+    <!--<target name="project" depends="clean,interview_lib_copy,compile,cp_props"/>-->
+
+    <!--  PRODUCTION Build project and create distribution -->
+    <target name="all" depends="project,dist">
+    </target>
+
+</project>

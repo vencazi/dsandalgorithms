@@ -1,0 +1,19 @@
+product         =   interview
+report_tool     =   interview
+build.compiler  =   modern
+debug           =   on
+optimize        =   off
+base_dir        =   ..
+
+
+## Target directory descriptions
+## -------------------------------
+deploy_dir	           =   ${base_dir}/dist
+interview_dir         =   ${base_dir}/src
+base_classes_dir       =   ${base_dir}/classes
+
+interview_build_dir       =   ${base_dir}/build
+interview_deploy_dir      =   ${interview_build_dir}
+interview_classes_dir     =   ${interview_deploy_dir}/classes
+interview_lib_dir         =   ${interview_deploy_dir}/lib
+interview_props_dir	   =   ${interview_deploy_dir}/classes
