@@ -28,5 +28,16 @@ public class IOUtils {
 		}
 		return -1;
 	}
+
+	
+	public static void printArray(Object[] arr) {
+		Integer[] intArray = (Integer[]) arr;
+		int ind = 0;
+		for(int i:intArray) {
+			System.out.print(i + ((ind == arr.length-1)?"":"|"));
+			ind++;
+		}
+		System.out.println("\n*********************************");
+	}
 	
 }

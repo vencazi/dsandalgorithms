@@ -37,10 +37,10 @@ public class MergeSort<T> implements ISort<T> {
 		}
 		ISort<Integer> sort =  new MergeSort(intArr);
 		System.out.println("UnSorted Array");
-		printArray(sort.getArray());
+		IOUtils.printArray(sort.getArray());
 		sort.doSort();
 		System.out.println("Sorted Array");
-		printArray(sort.getArray());
+		IOUtils.printArray(sort.getArray());
 	}
 
 	
@@ -65,7 +65,7 @@ public class MergeSort<T> implements ISort<T> {
 			divide(arr, lo, mid);
 			divide(arr, mid+1, hi);
 			merge((Integer[]) arr, lo, mid, hi);
-			printArray(arr);
+			IOUtils.printArray(arr);
 		} else {
 			return;
 		}
@@ -115,13 +115,4 @@ public class MergeSort<T> implements ISort<T> {
 			tempInd = tempInd + 1;
 		}
 	}
-
-	static void printArray(Object[] arr) {
-		Integer[] intArray = (Integer[]) arr;
-		for(int i:intArray) {
-			System.out.print(i + ((i == arr.length-1)?"":"|"));
-		}
-		System.out.println("\n*********************************");
-	}
-
 }
