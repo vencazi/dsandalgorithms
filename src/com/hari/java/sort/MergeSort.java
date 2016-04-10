@@ -9,24 +9,45 @@ import com.hari.utils.IOUtils;
  * @author venkat
  *
  */
-public class MergeSort {
+public class MergeSort<T> implements ISort<T> {
+
+	private T[] array;
+	
+	public MergeSort(T[] array) {
+		this.array = array;
+	}
+	
+	public T[] getArray() {
+		return array;
+	}
+	
+	public void setArray(T[] array) {
+		this.array = array;
+	}
 
 	public static void main(String[] args) {
 		System.out.print("Enter Array String seperated by comma : ");
 		String str = IOUtils.readString();
 		String[] arr = str.split(",");
-		int[] intArr = new int[arr.length];
+		Integer[] intArr = new Integer[arr.length];
 		int ind = 0;
 		for(String s:arr) {
 			intArr[ind] = Integer.parseInt(s);
 			ind++;
 		}
+		ISort<Integer> sort =  new MergeSort(intArr);
 		System.out.println("UnSorted Array");
-		printArray(intArr);
-		divide(intArr, 0, arr.length-1);
+		printArray(sort.getArray());
+		sort.doSort();
 		System.out.println("Sorted Array");
-		printArray(intArr);
+		printArray(sort.getArray());
 	}
+
+	
+	public void doSort() {
+		divide(array, 0, array.length-1);
+	}
+
 	
 	/**
 	 * This method recursively divides the input array into 2 half till
@@ -38,12 +59,12 @@ public class MergeSort {
 	 * @param lo
 	 * @param hi
 	 */
-	public static void divide(int[] arr, int lo, int hi) {
+	public void divide(T[] arr, int lo, int hi) {
 		if (lo < hi) {
 			int mid = (lo+hi)/2;
 			divide(arr, lo, mid);
 			divide(arr, mid+1, hi);
-			merge(arr, lo, mid, hi);
+			merge((Integer[]) arr, lo, mid, hi);
 			printArray(arr);
 		} else {
 			return;
@@ -58,7 +79,7 @@ public class MergeSort {
 	 * @param mid
 	 * @param hi
 	 */
-	public static void merge(int[] arr, int lo, int mid, int hi) {
+	public void merge(Integer[] arr, int lo, int mid, int hi) {
 		int a=lo;
 		int b=mid;
 		
@@ -95,10 +116,12 @@ public class MergeSort {
 		}
 	}
 
-	static void printArray(int[] arr) {
-		for(int i:arr) {
+	static void printArray(Object[] arr) {
+		Integer[] intArray = (Integer[]) arr;
+		for(int i:intArray) {
 			System.out.print(i + ((i == arr.length-1)?"":"|"));
 		}
 		System.out.println("\n*********************************");
 	}
+
 }
