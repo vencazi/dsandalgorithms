@@ -13,21 +13,22 @@ public class Median {
 	public static void main(String[] args) {
 		Integer[] arrayA = getInput();
 		Integer[] arrayB = getInput();
-		process(arrayA, arrayB);
+		Integer median = process(arrayA, arrayB);
+		System.out.println("Median ==> " + median);
 	}
 
-	static void process(Integer[] arrayA, Integer[] arrayB) {
+	static Integer process(Integer[] arrayA, Integer[] arrayB) {
 		IOUtils.printArray(arrayA);
 		IOUtils.printArray(arrayB);
 		int medA = arrayA.length/2;
 		int medB = arrayB.length/2;
 		
-		if (arrayA.length == 1 || arrayB.length == 1) {
-			return;
+		if (arrayA.length == 2 || arrayB.length == 2) {
+			return (Math.max(arrayA[0], arrayB[0]) + Math.min(arrayA[1],  arrayB[1])/2);
 		}
 		
 		if (arrayA[medA] == arrayB[medB]) {
-			return;
+			return arrayA[medA];
 		}
 		Integer[] tempA = null;
 		Integer[] tempB = null;
@@ -42,7 +43,7 @@ public class Median {
 			tempB = new Integer[arrayB.length-medB];
 			System.arraycopy(arrayB, medB, tempB, 0, arrayB.length-medB); 
 		}
-		process(tempA, tempB);
+		return process(tempA, tempB);
 	}
 	
 	static Integer[] getInput() {
