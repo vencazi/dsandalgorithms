@@ -1,6 +1,6 @@
 # Directory where the application is installed
 #
-APP_PATH=/home/venkat/tech/interview/build
+APP_PATH=/home/venkat/tech/dsandalgorithms/build
 # Java Home
 #
 
