@@ -40,4 +40,14 @@ public class IOUtils {
 		System.out.println("\n*********************************");
 	}
 	
+	public static int[] getIntArray(String[] strArray) {
+		int[] destArray = new int[strArray.length];
+		int ind = 0;
+		for(String str : strArray) {
+			destArray[ind] = Integer.parseInt(str);
+			ind++;
+		}
+		return destArray;
+	}
+	
 }
